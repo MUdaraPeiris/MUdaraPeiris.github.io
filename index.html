@@ -9,14 +9,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --text-primary: #1a1a1a;
+            /* Oberlin Colors */
+            --oberlin-crimson: #AA0C31;
+            --oberlin-crimson-dark: #8a0a28;
+            --oberlin-gold: #D29908;
+            --oberlin-gold-light: #e8b84a;
+            --oberlin-black: #231F20;
+            
+            --text-primary: #231F20;
             --text-secondary: #4a4a4a;
             --text-muted: #6a6a6a;
-            --link-color: #0066cc;
-            --link-hover: #004499;
+            --link-color: #AA0C31;
+            --link-hover: #8a0a28;
             --bg-primary: #fafafa;
             --border-light: #e0e0e0;
-            --max-width: 800px;
+            --sidebar-width: 220px;
+            --content-max-width: 800px;
         }
 
         * {
@@ -35,13 +43,107 @@
             line-height: 1.7;
             color: var(--text-primary);
             background-color: var(--bg-primary);
+        }
+
+        /* Layout */
+        .page-wrapper {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 0 24px;
         }
 
-        .container {
-            max-width: var(--max-width);
-            margin: 0 auto;
+        .main-content {
+            flex: 1;
+            max-width: var(--content-max-width);
             padding: 60px 0 80px;
+            padding-right: 60px;
+        }
+
+        /* Sticky Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            flex-shrink: 0;
+            padding-top: 80px;
+        }
+
+        .sidebar-nav {
+            position: sticky;
+            top: 30px;
+            max-height: calc(100vh - 60px);
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .sidebar-nav::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-thumb {
+            background: var(--border-light);
+            border-radius: 2px;
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+        }
+
+        .sidebar-nav > ul > li {
+            margin-bottom: 16px;
+        }
+
+        .sidebar-nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+            padding: 4px 0;
+            border-left: 2px solid transparent;
+            padding-left: 12px;
+            margin-left: -12px;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--oberlin-crimson);
+        }
+
+        .sidebar-nav a.active {
+            color: var(--oberlin-crimson);
+            border-left-color: var(--oberlin-crimson);
+            font-weight: 600;
+        }
+
+        .sidebar-nav .nav-section > a {
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .sidebar-nav .nav-section > a.active {
+            color: var(--oberlin-crimson);
+        }
+
+        .sidebar-nav .nav-subsection {
+            margin-left: 12px;
+            margin-top: 6px;
+        }
+
+        .sidebar-nav .nav-subsection a {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        .sidebar-nav .back-to-top {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .sidebar-nav .back-to-top a {
+            font-size: 13px;
+            color: var(--text-muted);
         }
 
         /* Header / Profile Section */
@@ -66,7 +168,7 @@
             width: 180px;
             height: 180px;
             border-radius: 6px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--oberlin-crimson) 0%, var(--oberlin-crimson-dark) 100%);
             flex-shrink: 0;
             display: flex;
             align-items: center;
@@ -82,6 +184,7 @@
             font-weight: 600;
             margin-bottom: 16px;
             letter-spacing: -0.02em;
+            color: var(--oberlin-black);
         }
 
         .profile-info p {
@@ -96,6 +199,7 @@
 
         .profile-info a:hover {
             text-decoration: underline;
+            color: var(--link-hover);
         }
 
         .contact-links {
@@ -111,6 +215,7 @@
 
         .contact-links a:hover {
             text-decoration: underline;
+            color: var(--link-hover);
         }
 
         .contact-links .separator {
@@ -118,29 +223,10 @@
             margin: 0 4px;
         }
 
-        /* Navigation */
-        nav {
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        nav a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            margin-right: 24px;
-            font-size: 15px;
-            font-weight: 400;
-            transition: color 0.2s;
-        }
-
-        nav a:hover {
-            color: var(--link-color);
-        }
-
         /* Sections */
         section {
             margin-bottom: 50px;
+            scroll-margin-top: 20px;
         }
 
         h2 {
@@ -148,7 +234,7 @@
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 24px;
-            color: var(--text-primary);
+            color: var(--oberlin-crimson);
             letter-spacing: -0.01em;
         }
 
@@ -158,6 +244,7 @@
             margin-top: 30px;
             margin-bottom: 16px;
             color: var(--text-secondary);
+            scroll-margin-top: 20px;
         }
 
         /* Publication List */
@@ -199,6 +286,7 @@
 
         .pub-links a:hover {
             text-decoration: underline;
+            color: var(--link-hover);
         }
 
         .pub-links a::before {
@@ -212,7 +300,7 @@
         /* Presentation List */
         .pres-year {
             font-weight: 600;
-            color: var(--text-primary);
+            color: var(--oberlin-crimson);
             margin-top: 24px;
             margin-bottom: 12px;
         }
@@ -231,7 +319,31 @@
             color: var(--text-primary);
         }
 
+        /* Footer */
+        footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-light);
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
         /* Responsive */
+        @media (max-width: 1000px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                padding-right: 0;
+                max-width: 100%;
+            }
+
+            .page-wrapper {
+                display: block;
+            }
+        }
+
         @media (max-width: 700px) {
             .profile {
                 flex-direction: column;
@@ -248,342 +360,577 @@
             .profile-info h1 {
                 font-size: 1.8rem;
             }
-
-            nav {
-                text-align: center;
-            }
-
-            nav a {
-                display: inline-block;
-                margin: 4px 12px;
-            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Profile Section -->
-        <header class="profile">
-            <!-- Replace this placeholder with your photo: <img src="photo.jpg" alt="M. Udara Peiris" class="profile-photo"> -->
-            <div class="profile-photo-placeholder">UP</div>
-            
-            <div class="profile-info">
-                <h1>M. Udara Peiris</h1>
-                <p>
-                    I am an Associate Professor of Financial Economics in the 
-                    <a href="https://www.oberlin.edu/arts-and-sciences/departments/economics">Department of Economics</a> 
-                    at <a href="https://www.oberlin.edu">Oberlin College</a>, Ohio, USA.
-                </p>
-                <p>
-                    I am also a Visiting Researcher at the <a href="https://nbs.sk/en/">National Bank of Slovakia</a> 
-                    and a Global Academic Fellow at <a href="https://www.veriteresearch.org">Verite Research</a>, Sri Lanka.
-                </p>
-                <p>
-                    My research focuses on the nexus between the macroeconomy and financial markets, with emphasis on 
-                    monetary policy, capital flows, and sovereign debt. I completed my PhD and MSc (Dist.) in Financial Economics 
-                    at the University of Oxford as a Clarendon Scholar.
-                </p>
-                <div class="contact-links">
-                    <a href="mailto:upeiris@oberlin.edu">upeiris@oberlin.edu</a>
-                    <span class="separator">·</span>
-                    <a href="https://scholar.google.com/citations?user=YOUR_ID">Scholar</a>
-                    <span class="separator">·</span>
-                    <a href="https://www.linkedin.com/in/udara-peiris-9816941/">LinkedIn</a>
-                    <span class="separator">·</span>
-                    <a href="https://www.oberlin.edu/m-udara-peiris">Oberlin Profile</a>
+    <div class="page-wrapper">
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Profile Section -->
+            <header id="top" class="profile">
+                <!-- TO ADD YOUR PHOTO: 
+                     1. Upload a photo file (e.g., photo.jpg) to your GitHub repository
+                     2. Delete or comment out the <div class="profile-photo-placeholder">UP</div> line below
+                     3. Uncomment the <img> line below and update the filename if needed
+                -->
+                <!-- <img src="photo.jpg" alt="M. Udara Peiris" class="profile-photo"> -->
+                <div class="profile-photo-placeholder">UP</div>
+                
+                <div class="profile-info">
+                    <h1>M. Udara Peiris</h1>
+                    <p>
+                        I am an Associate Professor of Financial Economics in the 
+                        <a href="https://www.oberlin.edu/arts-and-sciences/departments/economics">Department of Economics</a> 
+                        at <a href="https://www.oberlin.edu">Oberlin College</a>, Ohio, USA.
+                    </p>
+                    <p>
+                        I am also a Visiting Researcher at the <a href="https://nbs.sk/en/">National Bank of Slovakia</a> 
+                        and a Global Academic Fellow at <a href="https://www.veriteresearch.org">Verite Research</a>, Sri Lanka.
+                    </p>
+                    <p>
+                        I study how monetary policy, capital flows, and sovereign debt shape the relationship between 
+                        macroeconomies and financial markets. Before joining Oberlin, I completed my PhD and MSc (Distinction) 
+                        in Financial Economics at the University of Oxford as a Clarendon Scholar.
+                    </p>
+                    <div class="contact-links">
+                        <a href="mailto:upeiris@oberlin.edu">upeiris@oberlin.edu</a>
+                        <span class="separator">·</span>
+                        <a href="https://www.dropbox.com/scl/fi/24y05yxh6770d9f0h648x/MUPEIRIS_cv_abr.pdf?rlkey=dmwi151me6wd39oucky154e8r&dl=0">CV</a>
+                        <span class="separator">·</span>
+                        <a href="https://scholar.google.com/citations?user=Bwr-wvcAAAAJ&hl=en&oi=ao">Scholar</a>
+                        <span class="separator">·</span>
+                        <a href="https://www.linkedin.com/in/udara-peiris-9816941/">LinkedIn</a>
+                        <span class="separator">·</span>
+                        <a href="https://x.com/UPeiris">X</a>
+                        <span class="separator">·</span>
+                        <a href="https://www.oberlin.edu/m-udara-peiris">Oberlin</a>
+                    </div>
                 </div>
-            </div>
-        </header>
+            </header>
 
-        <!-- Navigation -->
-        <nav>
-            <a href="#publications">Publications</a>
-            <a href="#working-papers">Working Papers</a>
-            <a href="#policy">Policy & Media</a>
-            <a href="#presentations">Presentations</a>
-        </nav>
+            <!-- Publications Section -->
+            <section id="publications">
+                <h2>Publications</h2>
+                
+                <ul class="pub-list">
+                    <li>
+                        <span class="pub-title">Stabilizing Credit When Nonperforming Loans Surge: The Role of Asset Management Companies</span><br>
+                        <span class="pub-authors">Martin, R., O'Brien, E., Peiris, M.U., and Tsomocos, D.P.</span><br>
+                        <span class="pub-venue">Journal of Economic Dynamics and Control, forthcoming (2026)</span>
+                    </li>
 
-        <!-- Publications Section -->
-        <section id="publications">
-            <h2>Publications</h2>
-            
-            <ul class="pub-list">
-                <li>
-                    <span class="pub-title">Stabilizing Credit When Nonperforming Loans Surge: The Role of Asset Management Companies</span><br>
-                    <span class="pub-authors">Martin, R., O'Brien, E., Peiris, M.U., and Tsomocos, D.P.</span><br>
-                    <span class="pub-venue">Journal of Economic Dynamics and Control, forthcoming (2026)</span>
-                </li>
+                    <li>
+                        <span class="pub-title">Capital Flow Freezes</span><br>
+                        <span class="pub-authors">Peiris, M.U., Sokolova, A. and Tsomocos, D.P.</span><br>
+                        <span class="pub-venue">Economic Theory, September 2024</span>
+                        <div class="pub-links">
+                            <a href="https://link.springer.com/article/10.1007/s00199-024-01604-6">paper</a>
+                            <a href="https://www.dropbox.com/scl/fi/upy1zz1dy0g89dm8tijbi/PST-LAMacro-2024.pdf?rlkey=3hibjf3lfeqgrvk0tyiulpj8h&dl=0">slides</a>
+                        </div>
+                    </li>
 
-                <li>
-                    <span class="pub-title">Capital Flow Freezes</span><br>
-                    <span class="pub-authors">Peiris, M.U., Sokolova, A. and Tsomocos, D.P.</span><br>
-                    <span class="pub-venue">Economic Theory, September 2024</span>
-                    <div class="pub-links">
-                        <a href="https://link.springer.com/article/10.1007/s00199-024-01604-6">paper</a>
-                        <a href="https://www.dropbox.com/scl/fi/upy1zz1dy0g89dm8tijbi/PST-LAMacro-2024.pdf?rlkey=3hibjf3lfeqgrvk0tyiulpj8h&dl=0">slides</a>
-                    </div>
-                </li>
+                    <li>
+                        <span class="pub-title">Commodity Cycles and Financial Instability in Emerging Economies</span><br>
+                        <span class="pub-authors">Andreev, M., Peiris, M.U., Shirobokov, A., and Tsomocos, D.P.</span><br>
+                        <span class="pub-venue">Annals of Finance, May 2024</span>
+                        <div class="pub-links">
+                            <a href="https://link.springer.com/article/10.1007/s10436-024-00443-8">paper</a>
+                        </div>
+                    </li>
 
-                <li>
-                    <span class="pub-title">Commodity Cycles and Financial Instability in Emerging Economies</span><br>
-                    <span class="pub-authors">Andreev, M., Peiris, M.U., Shirobokov, A., and Tsomocos, D.P.</span><br>
-                    <span class="pub-venue">Annals of Finance, May 2024</span>
-                    <div class="pub-links">
-                        <a href="https://link.springer.com/article/10.1007/s10436-024-00443-8">paper</a>
-                    </div>
-                </li>
+                    <li>
+                        <span class="pub-title">Does "Lean Against the Wind" Monetary Policy Improve Welfare in a Commodity Exporter?</span><br>
+                        <span class="pub-authors">Peiris, M.U., Shirobokov, A., and Tsomocos, D.P.</span><br>
+                        <span class="pub-venue">Journal of International Money and Finance, Volume 41, March 2024</span>
+                        <div class="pub-links">
+                            <a href="https://www.sciencedirect.com/science/article/pii/S0261560623002139">paper</a>
+                        </div>
+                    </li>
 
-                <li>
-                    <span class="pub-title">Does "Lean Against the Wind" Monetary Policy Improve Welfare in a Commodity Exporter?</span><br>
-                    <span class="pub-authors">Peiris, M.U., Shirobokov, A., and Tsomocos, D.P.</span><br>
-                    <span class="pub-venue">Journal of International Money and Finance, Volume 41, March 2024</span>
-                    <div class="pub-links">
-                        <a href="https://www.sciencedirect.com/science/article/pii/S0261560623002139">paper</a>
-                    </div>
-                </li>
+                    <li>
+                        <span class="pub-title">Macroprudential Policy Analysis in an Estimated DSGE Model with a Heterogeneous Banking System: An Application to Chile</span><br>
+                        <span class="pub-authors">Martinez, J-F., Peiris, M.U., and Tsomocos, D.P.</span><br>
+                        <span class="pub-venue">Latin American Journal of Central Banking, 1(1-4), 2020</span>
+                        <div class="pub-links">
+                            <a href="https://www.sciencedirect.com/science/article/pii/S2666143820300168">paper</a>
+                        </div>
+                    </li>
 
-                <li>
-                    <span class="pub-title">Macroprudential Policy Analysis in an Estimated DSGE Model with a Heterogeneous Banking System: An Application to Chile</span><br>
-                    <span class="pub-authors">Martinez, J-F., Peiris, M.U., and Tsomocos, D.P.</span><br>
-                    <span class="pub-venue">Latin American Journal of Central Banking, 1(1-4), 2020</span>
-                    <div class="pub-links">
-                        <a href="https://www.sciencedirect.com/science/article/pii/S2666143820300168">paper</a>
-                    </div>
-                </li>
+                    <li>
+                        <span class="pub-title">Macroprudential Policy and Financial (In)stability Analysis in the Russian Federation</span><br>
+                        <span class="pub-authors">Andreev, M., Peiris, M.U., Shirobokov, A., and Tsomocos, D.P.</span><br>
+                        <span class="pub-venue">Russian Journal of Money and Finance, 78(3), pp. 3–37, 2019</span>
+                        <div class="pub-links">
+                            <a href="https://rjmf.econs.online/upload/iblock/623/MF_78-03-EN_Andreev.pdf">paper</a>
+                        </div>
+                    </li>
 
-                <li>
-                    <span class="pub-title">Macroprudential Policy and Financial (In)stability Analysis in the Russian Federation</span><br>
-                    <span class="pub-authors">Andreev, M., Peiris, M.U., Shirobokov, A., and Tsomocos, D.P.</span><br>
-                    <span class="pub-venue">Russian Journal of Money and Finance, 78(3), pp. 3–37, 2019</span>
-                    <div class="pub-links">
-                        <a href="https://rjmf.econs.online/upload/iblock/623/MF_78-03-EN_Andreev.pdf">paper</a>
-                    </div>
-                </li>
+                    <li>
+                        <span class="pub-title">Debt Overhang and Monetary Policy in Czech Republic</span><br>
+                        <span class="pub-authors">Goodhart, C.A.E., Isakov, K., Peiris, M.U. and Tsomocos, D.P.</span><br>
+                        <span class="pub-venue">HSE Economic Journal, vol. 22(3), pp. 460-479, 2018</span>
+                        <div class="pub-links">
+                            <a href="https://ej.hse.ru/data/2018/11/01/1142778121/%D0%9F%D0%B5%D0%B9%D1%80%D0%B8%D1%81.pdf">paper</a>
+                        </div>
+                    </li>
 
-                <li>
-                    <span class="pub-title">Debt Overhang and Monetary Policy in Czech Republic</span><br>
-                    <span class="pub-authors">Goodhart, C.A.E., Isakov, K., Peiris, M.U. and Tsomocos, D.P.</span><br>
-                    <span class="pub-venue">HSE Economic Journal, vol. 22(3), pp. 460-479, 2018</span>
-                    <div class="pub-links">
-                        <a href="https://ej.hse.ru/data/2018/11/01/1142778121/%D0%9F%D0%B5%D0%B9%D1%80%D0%B8%D1%81.pdf">paper</a>
-                    </div>
-                </li>
+                    <li>
+                        <span class="pub-title">Perils of Unconventional Monetary Policy</span><br>
+                        <span class="pub-authors">Peiris, M.U., McMahon, M. and Polemarchakis, H.</span><br>
+                        <span class="pub-venue">Journal of Economic Dynamics and Control, Volume 93, August, pp. 92-114, 2018</span>
+                        <div class="pub-links">
+                            <a href="https://www.sciencedirect.com/science/article/pii/S0165188918300563">paper</a>
+                        </div>
+                    </li>
 
-                <li>
-                    <span class="pub-title">Perils of Unconventional Monetary Policy</span><br>
-                    <span class="pub-authors">Peiris, M.U., McMahon, M. and Polemarchakis, H.</span><br>
-                    <span class="pub-venue">Journal of Economic Dynamics and Control, Volume 93, August, pp. 92-114, 2018</span>
-                    <div class="pub-links">
-                        <a href="https://www.sciencedirect.com/science/article/pii/S0165188918300563">paper</a>
-                    </div>
-                </li>
+                    <li>
+                        <span class="pub-title">Debt, Recovery Rates and the Greek Dilemma</span><br>
+                        <span class="pub-authors">Goodhart, C.A.E., Peiris, M.U. and Tsomocos, D.P.</span><br>
+                        <span class="pub-venue">Journal of Financial Stability, Volume 36, June, pp. 265-278, 2018</span>
+                        <div class="pub-links">
+                            <a href="http://papers.ssrn.com/sol3/papers.cfm?abstract_id=2783353">paper</a>
+                        </div>
+                    </li>
 
-                <li>
-                    <span class="pub-title">Debt, Recovery Rates and the Greek Dilemma</span><br>
-                    <span class="pub-authors">Goodhart, C.A.E., Peiris, M.U. and Tsomocos, D.P.</span><br>
-                    <span class="pub-venue">Journal of Financial Stability, Volume 36, June, pp. 265-278, 2018</span>
-                    <div class="pub-links">
-                        <a href="http://papers.ssrn.com/sol3/papers.cfm?abstract_id=2783353">paper</a>
-                    </div>
-                </li>
+                    <li>
+                        <span class="pub-title">Collateral and the Efficiency of Monetary Policy</span><br>
+                        <span class="pub-authors">Peiris, M.U. and Vardoulakis, A.P.</span><br>
+                        <span class="pub-venue">Economic Theory, Volume 59, Issue 3, pp. 579-603, 2015</span>
+                        <div class="pub-links">
+                            <a href="https://www.dropbox.com/s/s7qhit2tnlgshz0/CEMPjournalfinal.pdf?dl=0">paper</a>
+                        </div>
+                    </li>
 
-                <li>
-                    <span class="pub-title">Collateral and the Efficiency of Monetary Policy</span><br>
-                    <span class="pub-authors">Peiris, M.U. and Vardoulakis, A.P.</span><br>
-                    <span class="pub-venue">Economic Theory, Volume 59, Issue 3, pp. 579-603, 2015</span>
-                    <div class="pub-links">
-                        <a href="https://www.dropbox.com/s/s7qhit2tnlgshz0/CEMPjournalfinal.pdf?dl=0">paper</a>
-                    </div>
-                </li>
+                    <li>
+                        <span class="pub-title">International Monetary Equilibrium with Default</span><br>
+                        <span class="pub-authors">Peiris, M.U. and Tsomocos, D.P.</span><br>
+                        <span class="pub-venue">Journal of Mathematical Economics, Volume 56, pp. 47-57, 2015</span>
+                        <div class="pub-links">
+                            <a href="https://www.dropbox.com/s/4wuobsnkuxsyiuk/IMED.pdf?dl=0">paper</a>
+                        </div>
+                    </li>
 
-                <li>
-                    <span class="pub-title">International Monetary Equilibrium with Default</span><br>
-                    <span class="pub-authors">Peiris, M.U. and Tsomocos, D.P.</span><br>
-                    <span class="pub-venue">Journal of Mathematical Economics, Volume 56, pp. 47-57, 2015</span>
-                    <div class="pub-links">
-                        <a href="https://www.dropbox.com/s/4wuobsnkuxsyiuk/IMED.pdf?dl=0">paper</a>
-                    </div>
-                </li>
+                    <li>
+                        <span class="pub-title">Savings and Default</span><br>
+                        <span class="pub-authors">Peiris, M.U. and Vardoulakis, A.P.</span><br>
+                        <span class="pub-venue">Economic Theory, Volume 54, Issue 1, pp. 153-180, September 2013</span>
+                        <div class="pub-links">
+                            <a href="http://rd.springer.com/article/10.1007/s00199-012-0722-2">paper</a>
+                        </div>
+                    </li>
 
-                <li>
-                    <span class="pub-title">Savings and Default</span><br>
-                    <span class="pub-authors">Peiris, M.U. and Vardoulakis, A.P.</span><br>
-                    <span class="pub-venue">Economic Theory, Volume 54, Issue 1, pp. 153-180, September 2013</span>
-                    <div class="pub-links">
-                        <a href="http://rd.springer.com/article/10.1007/s00199-012-0722-2">paper</a>
-                    </div>
-                </li>
+                    <li>
+                        <span class="pub-title">Global Imbalances and Taxing Capital Flows</span><br>
+                        <span class="pub-authors">Goodhart, C.A.E., Peiris, M.U. and Tsomocos, D.P.</span><br>
+                        <span class="pub-venue">International Journal of Central Banking, Lead Article, June 2013</span>
+                        <div class="pub-links">
+                            <a href="https://www.dropbox.com/s/d17culer6afuri2/IJCB.pdf?dl=0">paper</a>
+                        </div>
+                    </li>
 
-                <li>
-                    <span class="pub-title">Global Imbalances and Taxing Capital Flows</span><br>
-                    <span class="pub-authors">Goodhart, C.A.E., Peiris, M.U. and Tsomocos, D.P.</span><br>
-                    <span class="pub-venue">International Journal of Central Banking, Lead Article, June 2013</span>
-                    <div class="pub-links">
-                        <a href="https://www.dropbox.com/s/d17culer6afuri2/IJCB.pdf?dl=0">paper</a>
-                    </div>
-                </li>
+                    <li>
+                        <span class="pub-title">On Dividend Restrictions and the Collapse of the Interbank Market</span><br>
+                        <span class="pub-authors">Goodhart, C.A.E., Peiris, M.U., Vardoulakis, A.P. and Tsomocos, D.P.</span><br>
+                        <span class="pub-venue">Annals of Finance, Volume 6, Number 4, pp. 455-473, 2010</span>
+                        <div class="pub-links">
+                            <a href="http://www.springerlink.com/content/812187l821256753/">paper</a>
+                        </div>
+                    </li>
 
-                <li>
-                    <span class="pub-title">On Dividend Restrictions and the Collapse of the Interbank Market</span><br>
-                    <span class="pub-authors">Goodhart, C.A.E., Peiris, M.U., Vardoulakis, A.P. and Tsomocos, D.P.</span><br>
-                    <span class="pub-venue">Annals of Finance, Volume 6, Number 4, pp. 455-473, 2010</span>
-                    <div class="pub-links">
-                        <a href="http://www.springerlink.com/content/812187l821256753/">paper</a>
-                    </div>
-                </li>
+                    <li>
+                        <span class="pub-title">A Markov Chain Modulated Short-Term Interest Rate Model: Inference on Central Bank Transparency</span><br>
+                        <span class="pub-authors">Bhar, R., Colwell, D. and Peiris, M.U.</span><br>
+                        <span class="pub-venue">Journal of Applied Statistical Science, Volume 17, Issue 3, 2010</span>
+                        <div class="pub-links">
+                            <a href="https://www.dropbox.com/s/q1w6jk9z1tgz93l/bharcolwellpeiris.pdf?dl=0">paper</a>
+                        </div>
+                    </li>
+                </ul>
 
-                <li>
-                    <span class="pub-title">A Markov Chain Modulated Short-Term Interest Rate Model: Inference on Central Bank Transparency</span><br>
-                    <span class="pub-authors">Bhar, R., Colwell, D. and Peiris, M.U.</span><br>
-                    <span class="pub-venue">Journal of Applied Statistical Science, Volume 17, Issue 3, 2010</span>
-                    <div class="pub-links">
-                        <a href="https://www.dropbox.com/s/q1w6jk9z1tgz93l/bharcolwellpeiris.pdf?dl=0">paper</a>
-                    </div>
-                </li>
-            </ul>
+                <h3 id="book-chapters">Chapters in Books</h3>
+                <ul class="pub-list">
+                    <li>
+                        <span class="pub-title">Liquidity, Default and the Interaction of Financial Stability and Monetary Policy</span><br>
+                        <span class="pub-authors">Peiris, M.U., Tsomocos, D.P. and Vardoulakis, A.P.</span><br>
+                        <span class="pub-venue">in "The Changing Fortunes of Central Banking", Eds: Hartmann, Huang, Shoenmaker, Cambridge University Press, 2018</span>
+                    </li>
 
-            <h3>Chapters in Books</h3>
-            <ul class="pub-list">
-                <li>
-                    <span class="pub-title">Liquidity, Default and the Interaction of Financial Stability and Monetary Policy</span><br>
-                    <span class="pub-authors">Peiris, M.U., Tsomocos, D.P. and Vardoulakis, A.P.</span><br>
-                    <span class="pub-venue">in "The Changing Fortunes of Central Banking", Eds: Hartmann, Huang, Shoenmaker, Cambridge University Press, 2018</span>
-                </li>
+                    <li>
+                        <span class="pub-title">On Dividend Restrictions and the Collapse of the Interbank Market</span><br>
+                        <span class="pub-authors">Goodhart, C.A.E., Peiris, M.U., Tsomocos, D.P. and Vardoulakis, A.P.</span><br>
+                        <span class="pub-venue">in "Financial Stability in Practice", Vol. 2, Eds: Goodhart, Tsomocos, Edward Elgar Publishing, 2012</span>
+                    </li>
+                </ul>
+            </section>
 
-                <li>
-                    <span class="pub-title">On Dividend Restrictions and the Collapse of the Interbank Market</span><br>
-                    <span class="pub-authors">Goodhart, C.A.E., Peiris, M.U., Tsomocos, D.P. and Vardoulakis, A.P.</span><br>
-                    <span class="pub-venue">in "Financial Stability in Practice", Vol. 2, Eds: Goodhart, Tsomocos, Edward Elgar Publishing, 2012</span>
-                </li>
-            </ul>
-        </section>
+            <!-- Working Papers Section -->
+            <section id="working-papers">
+                <h2>Working Papers</h2>
+                
+                <ul class="pub-list">
+                    <li>
+                        <span class="pub-title">Distressed Assets and Fiscal-Monetary Support: Are AMCs a Third Way?</span><br>
+                        <span class="pub-authors">Martin, R., O'Brien, E., Peiris, M.U., and Tsomocos, D.P.</span><br>
+                        <span class="pub-venue">European Central Bank Working Paper, No 3023, February 2025</span>
+                        <div class="pub-links">
+                            <a href="https://www.ecb.europa.eu/pub/pdf/scpwps/ecb.wp3023~b8b4f32e67.en.pdf">paper</a>
+                            <a href="https://www.dropbox.com/scl/fi/hoym9wi7t1g6aailytc05/AMC24.pdf?rlkey=3g3zlqihzh074fgosmq9giqvd&dl=0">slides</a>
+                        </div>
+                    </li>
 
-        <!-- Working Papers Section -->
-        <section id="working-papers">
-            <h2>Working Papers</h2>
-            
-            <ul class="pub-list">
-                <li>
-                    <span class="pub-title">Distressed Assets and Fiscal-Monetary Support: Are AMCs a Third Way?</span><br>
-                    <span class="pub-authors">Martin, R., O'Brien, E., Peiris, M.U., and Tsomocos, D.P.</span><br>
-                    <span class="pub-venue">European Central Bank Working Paper, No 3023, February 2025</span>
-                    <div class="pub-links">
-                        <a href="https://www.ecb.europa.eu/pub/pdf/scpwps/ecb.wp3023~b8b4f32e67.en.pdf">paper</a>
-                        <a href="https://www.dropbox.com/scl/fi/hoym9wi7t1g6aailytc05/AMC24.pdf?rlkey=3g3zlqihzh074fgosmq9giqvd&dl=0">slides</a>
-                    </div>
-                </li>
+                    <li>
+                        <span class="pub-title">Corporate Legacy Debt, Inflation, and the Efficacy of Monetary Policy</span><br>
+                        <span class="pub-authors">Goodhart, C.A.E., Peiris, M.U., Tsomocos, D.P., and Wang, X.</span><br>
+                        <span class="pub-venue">CEPR Discussion Paper D16799, 2021</span>
+                        <div class="pub-links">
+                            <a href="https://cepr.org/active/publications/discussion_papers/dp.php?dpno=16799#">paper</a>
+                            <a href="https://www.dropbox.com/s/vdiexwsa0nlrunx/Goodhartetal22.pdf?dl=0">slides</a>
+                            <a href="https://www.dropbox.com/scl/fi/vsqitpqnk4f64c2woo4pz/Goodhartetal23.pdf?dl=0&rlkey=btltkh3yuyo2bajqyyjix2z27">SED slides</a>
+                            <a href="https://www.dropbox.com/scl/fi/evfplykubao6hab06bf4r/Goodhartetal23.pdf?rlkey=i54gexoxnisinv5itmcq2w6vj&dl=0">AEA slides</a>
+                        </div>
+                    </li>
 
-                <li>
-                    <span class="pub-title">Corporate Legacy Debt, Inflation, and the Efficacy of Monetary Policy</span><br>
-                    <span class="pub-authors">Goodhart, C.A.E., Peiris, M.U., Tsomocos, D.P., and Wang, X.</span><br>
-                    <span class="pub-venue">CEPR Discussion Paper D16799, 2021</span>
-                    <div class="pub-links">
-                        <a href="https://cepr.org/active/publications/discussion_papers/dp.php?dpno=16799#">paper</a>
-                        <a href="https://www.dropbox.com/s/vdiexwsa0nlrunx/Goodhartetal22.pdf?dl=0">slides</a>
-                        <a href="https://www.dropbox.com/scl/fi/vsqitpqnk4f64c2woo4pz/Goodhartetal23.pdf?dl=0&rlkey=btltkh3yuyo2bajqyyjix2z27">SED slides</a>
-                        <a href="https://www.dropbox.com/scl/fi/evfplykubao6hab06bf4r/Goodhartetal23.pdf?rlkey=i54gexoxnisinv5itmcq2w6vj&dl=0">AEA slides</a>
-                    </div>
-                </li>
+                    <li>
+                        <span class="pub-title">The Fisher Equation Reconsidered</span><br>
+                        <span class="pub-authors">Peiris, M.U. and Polemarchakis, H.</span><br>
+                        <span class="pub-venue">CRETA Discussion Series University of Warwick, No. 37, 2017</span>
+                    </li>
 
-                <li>
-                    <span class="pub-title">The Fisher Equation Reconsidered</span><br>
-                    <span class="pub-authors">Peiris, M.U. and Polemarchakis, H.</span><br>
-                    <span class="pub-venue">CRETA Discussion Series University of Warwick, No. 37, 2017</span>
-                </li>
+                    <li>
+                        <span class="pub-title">Capital Flows, Default and Renegotiation</span><br>
+                        <span class="pub-authors">Peiris, M.U., Sokolova, A. and Tsomocos, D.P.</span><br>
+                        <span class="pub-venue">Saïd Business School WP 2017-03, 2016</span>
+                        <div class="pub-links">
+                            <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2910492">paper</a>
+                        </div>
+                    </li>
+                </ul>
+            </section>
 
-                <li>
-                    <span class="pub-title">Capital Flows, Default and Renegotiation</span><br>
-                    <span class="pub-authors">Peiris, M.U., Sokolova, A. and Tsomocos, D.P.</span><br>
-                    <span class="pub-venue">Saïd Business School WP 2017-03, 2016</span>
-                    <div class="pub-links">
-                        <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2910492">paper</a>
-                    </div>
-                </li>
-            </ul>
-        </section>
+            <!-- Public Engagement Section -->
+            <section id="public-engagement">
+                <h2>Public Engagement</h2>
 
-        <!-- Policy Section -->
-        <section id="policy">
-            <h2>Policy Work & Media</h2>
-            
-            <ul class="pub-list">
-                <li>
-                    <span class="pub-title">Distressed Assets and Fiscal-Monetary Support: Are AMCs a Third Way?</span><br>
-                    <span class="pub-authors">Martin, R., O'Brien, E., Peiris, M.U., and Tsomocos, D.P.</span><br>
-                    <span class="pub-venue">SUERF Policy Brief 1020, November 2024</span>
-                    <div class="pub-links">
-                        <a href="https://www.suerf.org/wp-content/uploads/2024/11/SUERF-Policy-Brief-1020-Martin-et-al.pdf">policy brief</a>
-                    </div>
-                </li>
+                <h3 id="reports">Sri Lanka Debt Crisis — Reports</h3>
+                <ul class="pub-list">
+                    <li>
+                        <span class="pub-title">Debt Update, May 2023</span><br>
+                        <span class="pub-venue">Verite Research</span>
+                        <div class="pub-links">
+                            <a href="https://www.veriteresearch.org/publication/issue-3-17-may-2023-verite-research-debt-update/">report</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="pub-title">Debt Update, March 2023</span><br>
+                        <span class="pub-venue">Verite Research</span>
+                        <div class="pub-links">
+                            <a href="https://www.veriteresearch.org/publication/issue-2-17-march-2023-verite-research-debt-update/">report</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="pub-title">Debt Update, February 2023</span><br>
+                        <span class="pub-venue">Verite Research</span>
+                        <div class="pub-links">
+                            <a href="https://www.veriteresearch.org/publication/verite-research-debt-update/">report</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="pub-title">The Desirability of Domestic Debt Restructuring</span><br>
+                        <span class="pub-venue">Verite Research Background Note, October 2022</span>
+                        <div class="pub-links">
+                            <a href="https://www.veriteresearch.org/wp-content/uploads/2022/10/VR_EN_BN_Oct2022_The-Desirability-of-Domestic-Debt-Restructuring.pdf">report</a>
+                        </div>
+                    </li>
+                </ul>
 
-                <li>
-                    <span class="pub-title">The Need for Governance-Linked State-Contingent IMF Programmes: A Third Way for Sri Lanka</span><br>
-                    <span class="pub-authors">Goodhart, C.A.E., Peiris, M.U., and Tsomocos, D.P.</span><br>
-                    <span class="pub-venue">International Banker, April 2023</span>
-                    <div class="pub-links">
-                        <a href="https://internationalbanker.com/finance/the-need-for-governance-linked-state-contingent-imf-programmes-a-third-way-for-sri-lanka/">article</a>
-                    </div>
-                </li>
+                <h3 id="public-events">Public Events</h3>
+                <ul class="pub-list">
+                    <li><span class="pub-title">Public Finance Lounge</span>, Verite Research, July 5, 2024</li>
+                    <li><span class="pub-title">Public Finance Lounge</span>, Verite Research, January 11, 2023</li>
+                    <li><span class="pub-title">Public Finance Lounge</span>, Verite Research, December 12, 2022</li>
+                    <li>
+                        <span class="pub-title">Domestic Debt Restructuring: The Way Forward</span><br>
+                        <span class="pub-venue">Hosted by Acuity Partners and FT Lanka, November 2, 2022</span>
+                        <div class="pub-links">
+                            <a href="https://www.youtube.com/watch?v=X9clUUeWgn0&t=2152s">video</a>
+                        </div>
+                    </li>
+                    <li><span class="pub-title">Public Finance Lounge</span>, Verite Research, March 2, 2021</li>
+                </ul>
 
-                <li>
-                    <span class="pub-title">Corporate Legacy Debt, Inflation, and the Efficacy of Monetary Policy</span><br>
-                    <span class="pub-authors">Peiris, M.U., Tsomocos, D.P. and Wang, X.</span><br>
-                    <span class="pub-venue">VoxEU, March 2022 · CD Howe Intelligence Memo, April 2022</span>
-                    <div class="pub-links">
-                        <a href="https://voxeu.org/article/corporate-legacy-debt-inflation-and-efficacy-monetary-policy">VoxEU</a>
-                        <a href="https://www.cdhowe.org/intelligence-memos/goodhart-peiris-tsomocos-wang-corporate-legacy-debt-inflation-and-efficacy">CD Howe</a>
-                    </div>
-                </li>
+                <h3 id="tv-interviews">Television Interviews</h3>
+                <ul class="pub-list">
+                    <li>
+                        <span class="pub-title">Newsline: International Creditors Meeting — Why is it Important?</span><br>
+                        <span class="pub-venue">NewsFirst/TV1 (Sri Lanka), September 21, 2022</span>
+                        <div class="pub-links">
+                            <a href="https://www.youtube.com/watch?v=rLcTtoQ5tLE">video</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="pub-title">Face the Nation: Navigating Sri Lanka's Economy in Turbulent Times</span><br>
+                        <span class="pub-venue">NewsFirst/TV1 (Sri Lanka), April 25, 2022</span>
+                        <div class="pub-links">
+                            <a href="https://www.youtube.com/watch?v=nTBqa3D2Fj0">video</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="pub-title">Newsline</span><br>
+                        <span class="pub-venue">NewsFirst/TV1 (Sri Lanka), April 7, 2022</span>
+                        <div class="pub-links">
+                            <a href="https://www.youtube.com/watch?v=CyVsoR9_oSo&list=WL&index=1&t=1514s">video</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="pub-title">Face the Nation: Economy in Turmoil — Is Sri Lanka on the Verge of Bankruptcy?</span><br>
+                        <span class="pub-venue">NewsFirst/TV1 (Sri Lanka), March 21, 2022</span>
+                        <div class="pub-links">
+                            <a href="https://www.youtube.com/watch?v=O1rgMNArYXU&list=WL&index=2&t=2s">video</a>
+                        </div>
+                    </li>
+                </ul>
 
-                <li>
-                    <span class="pub-title">Outright Monetary Transactions Sterilized</span><br>
-                    <span class="pub-authors">McMahon, M., Peiris, M.U. and Polemarchakis, H.</span><br>
-                    <span class="pub-venue">VoxEU column, October 2012</span>
-                    <div class="pub-links">
-                        <a href="http://www.voxeu.org/article/outright-monetary-transactions-sterilised">VoxEU</a>
-                    </div>
-                </li>
+                <h3 id="op-eds">Op-Eds & Articles</h3>
+                <ul class="pub-list">
+                    <li>
+                        <span class="pub-title">Sri Lanka's Reform Drive Faces Tariff Risks</span><br>
+                        <span class="pub-venue">Daily Mirror (Sri Lanka), July 10, 2025</span>
+                        <div class="pub-links">
+                            <a href="https://www.dailymirror.lk/print/opinion/Sri-Lankas-reform-drive-faces-tariff-risks/172-313840">article</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="pub-title">SL Should Strive for Lower US Tariffs than its Apparel Rivals</span><br>
+                        <span class="pub-venue">The Morning (Sri Lanka), June 8, 2025</span>
+                        <div class="pub-links">
+                            <a href="https://www.themorning.lk/articles/mjgxOYhZolwMu17dHdjg">article</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="pub-title">Unlocking Sri Lanka's Credit Markets: The Case for a National Asset Management Company</span><br>
+                        <span class="pub-venue">Daily Mirror (Sri Lanka), February 20, 2025</span>
+                        <div class="pub-links">
+                            <a href="https://www.dailymirror.lk/opinion/Unlocking-Sri-Lankas-Credit-Markets-The-Case-for-a-National-Asset-Management-Company/231-302776#">article</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="pub-title">Freeing the Balance Sheets of Banks: Sri Lanka Needs an AMC</span><br>
+                        <span class="pub-venue">Daily Mirror (Sri Lanka), August 22, 2024</span>
+                        <div class="pub-links">
+                            <a href="https://www.dailymirror.lk/opinion/Freeing-the-Balance-Sheets-of-Banks:-Sri-Lanka-needs-an-AMC/172-290044">article</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="pub-title">Debt Restructuring Before Election, a Risk to Economy</span><br>
+                        <span class="pub-venue">The Morning (Sri Lanka), May 14, 2024</span>
+                        <div class="pub-links">
+                            <a href="https://www.themorning.lk/articles/jFfcsqlClLMTp7wNV0pt">interview</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="pub-title">Poorer than India and Bangladesh: Where is IMF Program Taking Sri Lanka?</span><br>
+                        <span class="pub-venue">Daily FT (Sri Lanka), March 13, 2024</span>
+                        <div class="pub-links">
+                            <a href="https://www.ft.lk/columns/Poorer-than-India-and-Bangladesh-Where-is-IMF-program-taking-Sri-Lanka/4-759430">article</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="pub-title">The Rise of the Zombie Firms: The Problem with Recapitalising Banks</span><br>
+                        <span class="pub-venue">Daily Mirror (Sri Lanka), January 4, 2024</span>
+                        <div class="pub-links">
+                            <a href="https://www.dailymirror.lk/opinion/The-Rise-Of-The-Zombie-Firms-The-Problem-With-Recapitalising-Banks/172-274360">article</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="pub-title">Schrödinger's Banks: The Immediate Need for Policies to Ensure Financial Stability</span><br>
+                        <span class="pub-venue">Daily Mirror (Sri Lanka), September 14, 2023</span>
+                        <div class="pub-links">
+                            <a href="https://www.dailymirror.lk/opinion/Schrodingers-Banks-The-immediate-need-for-Policies-to-ensure-Financial-stability/172-267232">article</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="pub-title">Restructuring Domestic Debt Must be Fast, Credible, Comprehensive</span><br>
+                        <span class="pub-venue">Daily Mirror (Sri Lanka), June 8, 2023</span>
+                        <div class="pub-links">
+                            <a href="https://www.dailymirror.lk/opinion/Restructuring-domestic-debt-Must-be-credible-fast-comprehensive/172-260659">article</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="pub-title">The Need for Governance-Linked State-Contingent IMF Programmes: A Third Way for Sri Lanka</span><br>
+                        <span class="pub-authors">Goodhart, C.A.E., Peiris, M.U., and Tsomocos, D.P.</span><br>
+                        <span class="pub-venue">International Banker, April 27, 2023</span>
+                        <div class="pub-links">
+                            <a href="https://internationalbanker.com/finance/the-need-for-governance-linked-state-contingent-imf-programmes-a-third-way-for-sri-lanka/">article</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="pub-title">Sharing the Cost of the Crisis: The Need to Restructure Domestic Debt Together with an Asset Management Company</span><br>
+                        <span class="pub-venue">Daily FT (Sri Lanka), April 19, 2022</span>
+                        <div class="pub-links">
+                            <a href="https://www.ft.lk/columns/Sharing-the-cost-of-the-crisis-The-need-to-restructure-domestic-debt-together-with-an-Asset-Management-Company/4-733538">article</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="pub-title">Debt Restructuring and a Path to Confidence and Hope</span><br>
+                        <span class="pub-venue">Daily FT (Sri Lanka), January 14, 2022</span>
+                        <div class="pub-links">
+                            <a href="https://www.ft.lk/columns/Debt-restructuring-and-a-path-to-confidence-and-hope/4-729158">article</a>
+                        </div>
+                    </li>
+                </ul>
 
-                <li>
-                    <span class="pub-title">Dividend Restrictions as Macroprudential Regulation</span><br>
-                    <span class="pub-authors">Goodhart, C.A.E., Peiris, M.U., Vardoulakis, A.P. and Tsomocos, D.P.</span><br>
-                    <span class="pub-venue">VoxEU, February 2010</span>
-                    <div class="pub-links">
-                        <a href="http://www.voxeu.org/index.php?q=node/4631">VoxEU</a>
-                    </div>
-                </li>
-            </ul>
-        </section>
+                <h3 id="voxeu">VoxEU & Policy Briefs</h3>
+                <ul class="pub-list">
+                    <li>
+                        <span class="pub-title">Distressed Assets and Fiscal-Monetary Support: Are AMCs a Third Way?</span><br>
+                        <span class="pub-authors">Martin, R., O'Brien, E., Peiris, M.U., and Tsomocos, D.P.</span><br>
+                        <span class="pub-venue">SUERF Policy Brief 1020, November 2024</span>
+                        <div class="pub-links">
+                            <a href="https://www.suerf.org/wp-content/uploads/2024/11/SUERF-Policy-Brief-1020-Martin-et-al.pdf">policy brief</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="pub-title">Corporate Legacy Debt, Inflation, and the Efficacy of Monetary Policy</span><br>
+                        <span class="pub-authors">Peiris, M.U., Tsomocos, D.P. and Wang, X.</span><br>
+                        <span class="pub-venue">VoxEU, March 2022 · CD Howe Intelligence Memo, April 2022</span>
+                        <div class="pub-links">
+                            <a href="https://voxeu.org/article/corporate-legacy-debt-inflation-and-efficacy-monetary-policy">VoxEU</a>
+                            <a href="https://www.cdhowe.org/intelligence-memos/goodhart-peiris-tsomocos-wang-corporate-legacy-debt-inflation-and-efficacy">CD Howe</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="pub-title">Outright Monetary Transactions Sterilized</span><br>
+                        <span class="pub-authors">McMahon, M., Peiris, M.U. and Polemarchakis, H.</span><br>
+                        <span class="pub-venue">VoxEU, October 2012</span>
+                        <div class="pub-links">
+                            <a href="http://www.voxeu.org/article/outright-monetary-transactions-sterilised">VoxEU</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="pub-title">Dividend Restrictions as Macroprudential Regulation</span><br>
+                        <span class="pub-authors">Goodhart, C.A.E., Peiris, M.U., Vardoulakis, A.P. and Tsomocos, D.P.</span><br>
+                        <span class="pub-venue">VoxEU, February 2010</span>
+                        <div class="pub-links">
+                            <a href="http://www.voxeu.org/index.php?q=node/4631">VoxEU</a>
+                        </div>
+                    </li>
+                </ul>
 
-        <!-- Presentations Section -->
-        <section id="presentations">
-            <h2>Presentations & Seminars</h2>
-            
-            <p class="pres-year">2024</p>
-            <ul class="pres-list">
-                <li><span class="pres-venue">European Economic Association Annual Meeting</span>, Rotterdam — Distressed Assets and Fiscal-Monetary Support: Are AMCs a Third Way?, August 26</li>
-                <li><span class="pres-venue">Liberal Arts Macro Conference</span>, Kenyon College — Capital Flow Freezes, August 9</li>
-                <li><span class="pres-venue">Oxford-VU Macro-Finance Conference</span>, University of Oxford — Discussant, June 20</li>
-                <li><span class="pres-venue">ICMAIF</span>, Crete — Distressed Assets and Fiscal-Monetary Support: Are AMCs a Third Way?, May 30</li>
-                <li><span class="pres-venue">American Economic Association Annual Meeting (ASSA)</span>, San Antonio — Corporate Legacy Debt, Inflation, and the Efficacy of Monetary Policy, January 5</li>
-            </ul>
+                <h3 id="press-citations">Press Citations</h3>
+                <ul class="pub-list">
+                    <li>
+                        <span class="pub-title">Government Told to Act Soon on Re-profiling Domestic Debt to Avoid Haircuts</span><br>
+                        <span class="pub-venue">Daily Mirror (Sri Lanka), October 25, 2022</span>
+                        <div class="pub-links">
+                            <a href="https://www.dailymirror.lk/business-news/Government-told-to-act-soon-on-re-profiling-domestic-debt-to-avoid-haircuts/273-247385">article</a>
+                        </div>
+                    </li>
+                </ul>
+            </section>
 
-            <p class="pres-year">2023</p>
-            <ul class="pres-list">
-                <li><span class="pres-venue">Northeast Ohio Economics Workshop</span>, Cleveland State University — Disentangling the Effectiveness of Pandemic Policies, November 10</li>
-                <li><span class="pres-venue">5th Warsaw Money-Macro-Finance Conference</span>, University of Warsaw — Distressed Assets and Fiscal-Monetary Support: Are AMCs a Third Way?, September 22</li>
-                <li><span class="pres-venue">DGMF Seminar Series</span>, European Central Bank — Distressed Assets and Fiscal-Monetary Support: Are AMCs a Third Way?, September 20</li>
-                <li><span class="pres-venue">Society for Economic Dynamics Annual Meeting</span>, Cartagena — Corporate Legacy Debt, Inflation, and the Efficacy of Monetary Policy, June 30</li>
-                <li><span class="pres-venue">Liberal Arts Macro Conference</span>, Furman University — Distressed Assets and Fiscal-Monetary Support: Are AMCs a Third Way?, August 10</li>
-                <li><span class="pres-venue">Midwest Macro Meeting</span>, Clemson University — Corporate Legacy Debt, Inflation, and the Efficacy of Monetary Policy, May 21</li>
-                <li><span class="pres-venue">IBEFA Annual Meeting (ASSA)</span>, New Orleans — Corporate Legacy Debt, Inflation, and the Efficacy of Monetary Policy, January 7</li>
-            </ul>
-        </section>
+            <!-- Presentations Section -->
+            <section id="presentations">
+                <h2>Presentations & Seminars</h2>
+                
+                <p class="pres-year">2025</p>
+                <ul class="pres-list">
+                    <li><span class="pres-venue">World Congress of the Econometric Society</span>, Seoul</li>
+                    <li><span class="pres-venue">Yale Fighting a Financial Crisis Conference</span>, Yale University</li>
+                    <li><span class="pres-venue">LSE Workshop on Debt Sustainability Assessments</span>, London School of Economics</li>
+                    <li><span class="pres-venue">Liberal Arts Macro Conference</span>, Swarthmore College</li>
+                </ul>
 
-        <!-- Footer -->
-        <footer style="margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--border-light); color: var(--text-muted); font-size: 14px;">
-            <p>© M. Udara Peiris · Rice Hall 214, Oberlin College, Ohio</p>
-        </footer>
+                <p class="pres-year">2024</p>
+                <ul class="pres-list">
+                    <li><span class="pres-venue">European Economic Association Annual Meeting</span>, Rotterdam — Distressed Assets and Fiscal-Monetary Support: Are AMCs a Third Way?, August 26</li>
+                    <li><span class="pres-venue">Liberal Arts Macro Conference</span>, Kenyon College — Capital Flow Freezes, August 9</li>
+                    <li><span class="pres-venue">Oxford-VU Macro-Finance Conference</span>, University of Oxford — Discussant, June 20</li>
+                    <li><span class="pres-venue">ICMAIF</span>, Crete — Distressed Assets and Fiscal-Monetary Support: Are AMCs a Third Way?, May 30</li>
+                    <li><span class="pres-venue">American Economic Association Annual Meeting (ASSA)</span>, San Antonio — Corporate Legacy Debt, Inflation, and the Efficacy of Monetary Policy, January 5</li>
+                </ul>
+
+                <p class="pres-year">2023</p>
+                <ul class="pres-list">
+                    <li><span class="pres-venue">Northeast Ohio Economics Workshop</span>, Cleveland State University — Disentangling the Effectiveness of Pandemic Policies, November 10</li>
+                    <li><span class="pres-venue">5th Warsaw Money-Macro-Finance Conference</span>, University of Warsaw — Distressed Assets and Fiscal-Monetary Support: Are AMCs a Third Way?, September 22</li>
+                    <li><span class="pres-venue">DGMF Seminar Series</span>, European Central Bank — Distressed Assets and Fiscal-Monetary Support: Are AMCs a Third Way?, September 20</li>
+                    <li><span class="pres-venue">Society for Economic Dynamics Annual Meeting</span>, Cartagena — Corporate Legacy Debt, Inflation, and the Efficacy of Monetary Policy, June 30</li>
+                    <li><span class="pres-venue">Liberal Arts Macro Conference</span>, Furman University — Distressed Assets and Fiscal-Monetary Support: Are AMCs a Third Way?, August 10</li>
+                    <li><span class="pres-venue">Midwest Macro Meeting</span>, Clemson University — Corporate Legacy Debt, Inflation, and the Efficacy of Monetary Policy, May 21</li>
+                    <li><span class="pres-venue">IBEFA Annual Meeting (ASSA)</span>, New Orleans — Corporate Legacy Debt, Inflation, and the Efficacy of Monetary Policy, January 7</li>
+                </ul>
+            </section>
+
+            <!-- Footer -->
+            <footer>
+                <p>© M. Udara Peiris · Rice Hall 214, Oberlin College, Ohio</p>
+            </footer>
+        </main>
+
+        <!-- Sticky Sidebar Navigation -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-section">
+                        <a href="#publications">Publications</a>
+                        <ul class="nav-subsection">
+                            <li><a href="#book-chapters">Book Chapters</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-section">
+                        <a href="#working-papers">Working Papers</a>
+                    </li>
+                    <li class="nav-section">
+                        <a href="#public-engagement">Public Engagement</a>
+                        <ul class="nav-subsection">
+                            <li><a href="#reports">Reports</a></li>
+                            <li><a href="#public-events">Public Events</a></li>
+                            <li><a href="#tv-interviews">TV Interviews</a></li>
+                            <li><a href="#op-eds">Op-Eds</a></li>
+                            <li><a href="#voxeu">VoxEU & Briefs</a></li>
+                            <li><a href="#press-citations">Press Citations</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-section">
+                        <a href="#presentations">Presentations</a>
+                    </li>
+                </ul>
+                <div class="back-to-top">
+                    <a href="#top">↑ Back to top</a>
+                </div>
+            </nav>
+        </aside>
     </div>
+
+    <script>
+        // Highlight current section in sidebar as you scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('section[id], h3[id]');
+            const navLinks = document.querySelectorAll('.sidebar-nav a');
+
+            function highlightNav() {
+                let current = '';
+                const scrollPos = window.scrollY + 100;
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (scrollPos >= sectionTop) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', highlightNav);
+            highlightNav();
+        });
+    </script>
 </body>
 </html>
